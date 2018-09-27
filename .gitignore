@@ -1,0 +1,7 @@
+**/__pycache__/
+offline_job.log
+*.pyc
+**/.ipynb_checkpoints
+**/.idea
+.neptune/
+neptune.log
