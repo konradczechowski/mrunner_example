@@ -17,7 +17,9 @@ def create_experiment_for_spec(parameters):
     parameters['git_head'] = get_git_head_info()
     return Experiment(project=project_name, name=name, script=script,
                       parameters=parameters, python_path=python_path,
-                      paths_to_dump=paths_to_dump, time='3-0', tags=tags)
+                      paths_to_dump=paths_to_dump, tags=tags,
+                      time='1-0'  # days-hours
+                      )
 
 
 # params are also good place for e.g. output path, or git hash

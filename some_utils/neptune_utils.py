@@ -2,33 +2,35 @@ import argparse
 import os
 from deepsense import neptune
 
+
+def is_neptune_online():
+  # I wouldn't be suprised if this would depend on neptune version
+  return 'NEPTUNE_ONLINE_CONTEXT' in os.environ
+
+
 def get_configuration():
-    if os.environ.get('PMILOS_DEBUG', '0') == '1':
-        # local run, with offline neptune
-        parser = argparse.ArgumentParser(description='Debug run.')
-        parser.add_argument('--ex', type=str)
-        # parser.add_argument("--spec", default='spec')
-        parser.add_argument("--exp_dir_path", default='/tmp')
-        commandline_args = parser.parse_args()
-        if commandline_args.ex != None:
-            vars = {}
-            exec(open(commandline_args.ex).read(), vars)
-            spec_func = vars['spec']
-            # take first experiment (params configuration)
-            experiment = spec_func()[0]
-            params = experiment.parameters
-        else:
-            params = None
-        # create offline context
-        ctx = neptune.Context(offline_parameters=params)
-        exp_dir_path = commandline_args.exp_dir_path
-        return ctx, exp_dir_path
+  if is_neptune_online():
+    # running under neptune
+    ctx = neptune.Context()
+    # I can't find storage path in Neptune 2 context
+    # exp_dir_path = ctx.storage_url - this was used in neptune 1.6
+    exp_dir_path = os.getcwd()
+  else:
+    # local run
+    parser = argparse.ArgumentParser(description='Debug run.')
+    parser.add_argument('--ex', type=str)
+    parser.add_argument("--exp_dir_path", default='/tmp')
+    commandline_args = parser.parse_args()
+    if commandline_args.ex != None:
+      vars = {}
+      exec(open(commandline_args.ex).read(), vars)
+      spec_func = vars['spec']
+      # take first experiment (params configuration)
+      experiment = spec_func()[0]
+      params = experiment.parameters
     else:
-        # running under neptune
-        ctx = neptune.Context()
-        # I can't find storage path in Neptune2 context
-        # exp_dir_path = ctx.storage_url
-        exp_dir_path = os.getcwd()
-        return ctx, exp_dir_path
-
-
+      params = None
+    # create offline context
+    ctx = neptune.Context(offline_parameters=params)
+    exp_dir_path = commandline_args.exp_dir_path
+  return ctx, exp_dir_path
