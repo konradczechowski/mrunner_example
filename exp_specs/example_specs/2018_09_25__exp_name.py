@@ -1,7 +1,7 @@
 from mrunner.experiment import Experiment
 import sys, os
 sys.path.append(os.path.join(os.getcwd(), 'some_utils'))
-from spec_utils import get_git_head_info
+from spec_utils import get_git_head_info, get_combinations
 # It might be a good practice to not change specification files if run
 # successfully, to keep convenient history of experiments. When you want to run
 # the same experiment with different hyper-parameters, just copy it.
@@ -9,7 +9,8 @@ from spec_utils import get_git_head_info
 
 def create_experiment_for_spec(parameters):
     script = 'some_src/experiment.py'
-    name = 'experiment name'
+    # this will be also displayed in jobs on prometheus
+    name = 'your initials, experiment name'
     project_name = "my-project"
     python_path = '.:some_utils:some/other/utils/path'
     paths_to_dump = ''  # e.g. 'plgrid tensor2tensor', do we need it?
@@ -21,12 +22,16 @@ def create_experiment_for_spec(parameters):
                       time='1-0'  # days-hours
                       )
 
-
+# Set params_configurations, eg. as combinations of grid.
 # params are also good place for e.g. output path, or git hash
-params_configurations = [dict(delta=0.5),
-                         dict(delta=1.)]
+params_grid = dict(
+  delta=[0.5, 1],
+  alpha=['a',],
+)
+params_configurations = get_combinations(params_grid)
 
 
 def spec():
-    experiments = [create_experiment_for_spec(params) for params in params_configurations]
+    experiments = [create_experiment_for_spec(params)
+                   for params in params_configurations]
     return experiments

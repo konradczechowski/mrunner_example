@@ -1,8 +1,6 @@
 from neptune import ChannelType
 import os
 from some_utils.neptune_utils import get_configuration
-# To debug this locally (which is highly recommended) you run this script with
-# python some_src/experiment.py --
 
 
 if __name__ == '__main__':

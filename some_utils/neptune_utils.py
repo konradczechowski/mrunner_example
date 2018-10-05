@@ -29,7 +29,7 @@ def get_configuration():
       experiment = spec_func()[0]
       params = experiment.parameters
     else:
-      params = None
+      params = {}
     # create offline context
     ctx = neptune.Context(offline_parameters=params)
     exp_dir_path = commandline_args.exp_dir_path
