@@ -1,7 +1,9 @@
 import argparse
 import os
 from deepsense import neptune
+import socket
 
+_ctx = None
 
 def is_neptune_online():
   # I wouldn't be suprised if this would depend on neptune version
@@ -9,14 +11,12 @@ def is_neptune_online():
 
 
 def get_configuration():
+  global _ctx
   if is_neptune_online():
     # running under neptune
     ctx = neptune.Context()
-    # I can't find storage path in Neptune 2 context
-    # exp_dir_path = ctx.storage_url - this was used in neptune 1.6
     exp_dir_path = os.getcwd()
   else:
-    # local run
     parser = argparse.ArgumentParser(description='Debug run.')
     parser.add_argument('--ex', type=str)
     parser.add_argument("--exp_dir_path", default='/tmp')
@@ -33,4 +33,16 @@ def get_configuration():
     # create offline context
     ctx = neptune.Context(offline_parameters=params)
     exp_dir_path = commandline_args.exp_dir_path
+  _ctx = ctx
+  ctx.properties['pwd'] = os.getcwd()
+  ctx.properties['host'] = socket.gethostname()
   return ctx, exp_dir_path
+
+
+def neptune_logger(m, v):
+  global _ctx
+  assert _ctx is not None, "Run first get_configuration"
+  if _ctx.experiment_id is None:
+    print(rf"{m}:{v}")
+  else:
+    _ctx.channel_send(name=m, x=None, y=v)
