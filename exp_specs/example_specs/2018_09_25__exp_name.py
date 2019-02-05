@@ -11,7 +11,7 @@ def create_experiment_for_spec(parameters):
     script = 'some_src/experiment.py'
     # this will be also displayed in jobs on prometheus
     name = 'your initials, experiment name'
-    project_name = "my-project"
+    project_name = "sandbox"
     python_path = '.:some_utils:some/other/utils/path'
     paths_to_dump = ''  # e.g. 'plgrid tensor2tensor', do we need it?
     tags = 'test_user other_tag'.split(' ')
