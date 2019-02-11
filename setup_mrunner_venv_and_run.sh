@@ -9,6 +9,8 @@ python3 -m venv mrunner_npt2
 source mrunner_npt2/bin/activate
 # install neptune
 pip install -I neptune-cli==2.8.23
+# Login into neptune to generate tokens.
+neptune account login
 
 # Install mrunner
 pip install git+git://github.com/deepsense-ai/mrunner.git@bd1849cf
@@ -23,3 +25,5 @@ rm tmp_mrunner_config.yaml
 # You need to set slurm_url in mrunner_config.yaml (change username to yours).
 cd run
 mrunner --config mrunner_config.yaml --context plgrid_cpu run exp_specs/example_specs/2018_09_25__exp_name.py
+
+# See your experiment in https://neptune.ml/
