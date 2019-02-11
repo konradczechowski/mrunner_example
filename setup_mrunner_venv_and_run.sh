@@ -13,7 +13,7 @@ pip install -I neptune-cli==2.8.23
 neptune account login
 
 # Install mrunner
-pip install git+git://github.com/deepsense-ai/mrunner.git@bd1849cf
+pip install git+git://github.com/deepsense-ai/mrunner.git@63a1a796
 
 # Prepare config file with mrunner context. You can also create contexts in global default config in ~/.configs/mrunner/ .
 sed "s/<username>/$USERNAME/g" mrunner_config_template.yaml > tmp_mrunner_config.yaml
