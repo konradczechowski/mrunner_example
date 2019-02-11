@@ -13,7 +13,7 @@ contexts:
       cpu: 2
       mem: 5G
     slurm_url: <username>@pro.cyfronet.pl
-    storage_dir: /net/archive/groups/plggrl_algo/scratch
+    storage_dir: /net/archive/groups/plggluna/<username>
     user_id: <initials>
     venv: /net/people/plgkcz/tutorial/venv
 current_context: t2t_plgrid_cpu
