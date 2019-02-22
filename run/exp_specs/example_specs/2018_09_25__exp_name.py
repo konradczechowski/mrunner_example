@@ -19,7 +19,7 @@ def create_experiment_for_spec(parameters):
     return Experiment(project=project_name, name=name, script=script,
                       parameters=parameters, python_path=python_path,
                       paths_to_dump=paths_to_dump, tags=tags,
-                      time='1-0'  # days-hours
+                      time='0-1'  # days-hours
                       )
 
 # Set params_configurations, eg. as combinations of grid.

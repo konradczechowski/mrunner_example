@@ -8,7 +8,7 @@ contexts:
     - plgrid/tools/python/3.6.5
     - plgrid/tools/ffmpeg/3.0
     neptune: true
-    partition: plgrid
+    partition: plgrid-testing
     resources:
       cpu: 2
       mem: 5G
