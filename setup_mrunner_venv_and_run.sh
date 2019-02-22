@@ -24,6 +24,6 @@ mv tmp_mrunner_config.yaml mrunner_config.yaml
 # Run job on prometheus.
 # You need to set slurm_url in mrunner_config.yaml (change username to yours).
 cd run
-mrunner --config mrunner_config.yaml --context plgrid_cpu run exp_specs/example_specs/2018_09_25__exp_name.py
+mrunner --config ../mrunner_config.yaml --context plgrid_cpu run exp_specs/example_specs/2018_09_25__exp_name.py
 
 # See your experiment in https://neptune.ml/
